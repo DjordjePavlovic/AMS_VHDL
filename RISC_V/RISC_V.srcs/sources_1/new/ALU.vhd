@@ -30,5 +30,15 @@ begin
     -- and
     and_r <= a_i and b_i;
     
+    
+    -- Select res
+    res_o <= res_s;
+    with op_i select
+        res_s<= and_r when "00000", --and
+        or_r when "00001",          --or
+        add_r when "00010",         --add
+        sub_r when "00110",         --sub
+        (others => '1') when others;
+    
 
 end Behavioral;
