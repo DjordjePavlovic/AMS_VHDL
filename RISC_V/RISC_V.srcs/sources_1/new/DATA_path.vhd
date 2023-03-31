@@ -27,10 +27,3 @@ branch_condition_o : out std_logic
 -- ******************************************************
 );
 end entity;
-
-architecture Behavioral of DATA_path is
-
-begin
-
-
-end Behavioral;
