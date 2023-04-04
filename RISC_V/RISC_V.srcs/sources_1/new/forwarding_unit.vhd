@@ -1,6 +1,7 @@
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
+use work.all_pkg.all;
 
 entity forwarding_unit is
 port (
@@ -17,9 +18,61 @@ rd_address_mem_i : in std_logic_vector(4 downto 0);
 rd_we_wb_i : in std_logic;
 rd_address_wb_i : in std_logic_vector(4 downto 0);
 -- izlazi za prosledjivanje operanada ALU jedinici
-alu_forward_a_o : out std_logic_vector (1 downto 0);
+alu_forward_a_o : out std_logic_vector(1 downto 0);
 alu_forward_b_o : out std_logic_vector(1 downto 0);
 -- izlazi za prosledjivanje operanada komparatoru za odredjivanje uslovaskoka
 branch_forward_a_o : out std_logic;
 branch_forward_b_o : out std_logic);
 end entity;
+
+
+architecture Behavioral of forwarding_unit is
+   
+begin
+
+   forward_proc : process(rd_we_mem_i, rd_address_mem_i, rd_we_wb_i, rd_address_wb_i,rs1_address_ex_i, rs2_address_ex_i)is
+   begin
+      alu_forward_a_o <= "00";
+      alu_forward_b_o <= "00";
+      -- forwarding from WB stage
+      if (rd_we_wb_i = '1' and rd_address_wb_i /= "00000" )then 
+         if (rd_address_wb_i = rs1_address_ex_i)then
+            alu_forward_a_o <= "01";
+         end if;
+         if(rd_address_wb_i = rs2_address_ex_i)then
+            alu_forward_b_o <= "01";
+         end if;
+      end if;
+      -- forwarding from MEM stage
+      if (rd_we_mem_i = '1' and rd_address_mem_i /= "00000")then 
+         if (rd_address_mem_i = rs1_address_ex_i)then
+            alu_forward_a_o <= "10";
+         end if;
+         if (rd_address_mem_i = rs2_address_ex_i)then
+            alu_forward_b_o <= "10";
+         end if;
+      end if;
+   end process;
+   
+   branch_forward: process (rd_address_mem_i,rs1_address_id_i,rs2_address_id_i)is
+   begin
+   
+   branch_forward_a_o <= '0';
+   branch_forward_b_o <= '0';
+   
+   if( rd_address_mem_i /= "00000")then
+        if(rs1_address_id_i = rd_address_mem_i)then
+            branch_forward_a_o<='1';
+        end if;
+        if(rs2_address_id_i = rd_address_mem_i)then
+            branch_forward_a_o <= '1';
+        end if;
+    end if;
+   
+   
+   
+   
+   end process;
+
+
+end architecture;

@@ -34,7 +34,7 @@ begin
 
 rb_write : process (clk) is
 begin
-    if(falling_edge(clk) and ce='1') then
+    if(falling_edge(clk) ) then
         if(reset = '0')then
             reg_bank_s <=(others=>(others =>'0'));
         elsif (rd_we_i = '1') then
