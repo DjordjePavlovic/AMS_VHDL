@@ -9,7 +9,7 @@ opcode_i : in std_logic_vector (6 downto 0);
 branch_o : out std_logic;
 mem_to_reg_o : out std_logic;
 data_mem_we_o : out std_logic;
-alu_src_o : out std_logic;
+alu_src_b_o : out std_logic;
 rd_we_o : out std_logic;
 rs1_in_use_o : out std_logic;
 rs2_in_use_o : out std_logic;
@@ -26,7 +26,7 @@ begin
       branch_o <= '0';
       mem_to_reg_o  <= '0';
       data_mem_we_o <= '0';
-      alu_src_o   <= '0';
+      alu_src_b_o   <= '0';
       rd_we_o       <= '0';
       alu_2bit_op_o <= "00";
       rs1_in_use_o  <= '0';
@@ -34,22 +34,17 @@ begin
       case opcode_i is
          when "0000011" =>              --LOAD
             mem_to_reg_o  <= '1';
-            alu_src_o   <= '1';
+            alu_src_b_o   <= '1';
             rd_we_o       <= '1';
             rs1_in_use_o  <= '1';
          when "0100011" =>              --STORE
             data_mem_we_o <= '1';
-            alu_src_o   <= '1';
+            alu_src_b_o   <= '1';
             rs1_in_use_o  <= '1';
             rs2_in_use_o  <= '1';
-         when "0010011" =>              --I type
-            alu_2bit_op_o <= "11";
-            alu_src_o   <= '1';
-            rd_we_o       <= '1';
-            rs1_in_use_o  <= '1';
          when "1100011" =>              --B type
             alu_2bit_op_o <= "01";
-            alu_src_o   <= '1';
+            alu_src_b_o   <= '1';
             branch_o <= '1';
             rs1_in_use_o  <= '1';
             rs2_in_use_o  <= '1';

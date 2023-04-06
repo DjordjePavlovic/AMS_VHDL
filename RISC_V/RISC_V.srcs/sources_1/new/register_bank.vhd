@@ -10,8 +10,7 @@ use ieee.numeric_std.all;
 --***********************************************
 entity register_bank is
     generic (WIDTH : positive := 32);
-    port (clk : in std_logic;
-        ce : in  std_logic;
+    port(clk : in std_logic;
         reset : in std_logic;
 -- Interfejs 1 za citanje podataka
         rs1_address_i : in std_logic_vector(4 downto 0);

@@ -35,7 +35,7 @@ begin
             instruction_type <= i_type_instruction;
          when "01000" =>
             instruction_type <= s_type_instruction;
-         when "11000" =>
+         when others =>
             instruction_type <= b_type_instruction;
       end case;
    end process;

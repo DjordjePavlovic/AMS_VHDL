@@ -65,7 +65,7 @@ begin
             branch_forward_a_o<='1';
         end if;
         if(rs2_address_id_i = rd_address_mem_i)then
-            branch_forward_a_o <= '1';
+            branch_forward_b_o <= '1';
         end if;
     end if;
    

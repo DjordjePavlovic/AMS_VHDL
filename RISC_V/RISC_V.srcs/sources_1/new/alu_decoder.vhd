@@ -20,7 +20,7 @@ architecture behavioral of alu_decoder is
 begin
 
  	funct7_5_s <= funct7_i(5);
-   alu_dec : process(alu_2bit_op_i, funct3_i, funct7_5_s)is
+   alu_dec : process(alu_2bit_op_i, funct3_i,funct7_i, funct7_5_s)is
    begin
       --default
       alu_op_o <= "00010"; --add
