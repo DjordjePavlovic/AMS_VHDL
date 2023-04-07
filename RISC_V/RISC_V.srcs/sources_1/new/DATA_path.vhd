@@ -195,7 +195,7 @@ begin
    -- reg_bank rd_data update
 	with mem_to_reg_i select
 		rd_data_wb_s <=     extended_data_wb_s when '1',
-							alu_result_wb_s when '0';
+							alu_result_wb_s when others;
 
    -- extend data based on type of load instruction
    with instr_mem_read_i(14 downto 12) select
